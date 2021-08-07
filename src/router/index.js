@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../pages/Home.vue'
 import Transactions from '../pages/Transactions.vue'
 import TransactionsDetail from '../pages/Transactions-detail.vue'
+import NotFound from '../pages/404.vue'
 
 const routes = [
   {
@@ -10,11 +11,21 @@ const routes = [
   },
   {
     path: '/transactions',
+    name: 'transaction-route',
     component: Transactions,
   },
   {
     path: '/transactions/:id',
+    name: 'transaction-details-route',
     component: TransactionsDetail,
+  },
+  {
+    path: '/ts',
+    redirect: '/transactions'
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFound
   },
 ]
 

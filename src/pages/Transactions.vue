@@ -2,7 +2,14 @@
     <div>
         <h3>Transactions is here</h3>
         <div class="item" v-for="transaction in transactions" :key="transaction.id">
-            <router-link :to="`/transactions/${transaction.id}`"> {{ transaction.name }} </router-link>
+            <!-- <router-link :to="`/transactions/${transaction.id}`"> {{ transaction.name }} </router-link> -->
+            <router-link 
+                :to="{
+                    name: 'transaction-details-route', 
+                    params: { id: transaction.id},
+                }"
+                    >{{ transaction.name }} 
+            </router-link>
             <div class="price">Price: {{ transaction.price }} </div>
         </div>
     </div>
