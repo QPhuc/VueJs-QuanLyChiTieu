@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <h1>Transaction is here...</h1>
+    <div v-if="transactions.length">
         <h3>Transactions is here</h3>
         <div class="item" v-for="transaction in transactions" :key="transaction.id">
             <!-- <router-link :to="`/transactions/${transaction.id}`"> {{ transaction.name }} </router-link> -->
@@ -13,6 +14,9 @@
             <div class="price">Price: {{ transaction.price }} </div>
         </div>
     </div>
+    <div v-else>
+        <h3>Loading Transaction...</h3>
+    </div>
 </template>
 
 <script>
@@ -20,24 +24,13 @@
         name: 'Transactions',
         data() {
             return {
-                transactions: [
-                    {
-                        id: 1,
-                        name: 'Đi siêu thị',
-                        price: 1000
-                    },
-                    {
-                        id: 2,
-                        name: 'Mua gạo',
-                        price: 2000
-                    },
-                    {
-                        id: 3,
-                        name: 'Thanh toán tiền điện',
-                        price: 3000
-                    },
-                ]
+                transactions: []
             }
+        },
+        created() {
+            fetch("http://localhost:3000/transactions")
+                .then(response => response.json())
+                .then(data => this.transactions = data)
         },
     }
 </script>
