@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, watch, watchEffect } from 'vue';
 export default {
   name: 'Home',
   setup() {
@@ -26,6 +26,16 @@ export default {
       })
       .filter(customer => customer.includes(searchText.value.toLowerCase()))
     )
+
+    watch(searchText, (newValue, oldValue) => {
+      console.log(newValue, oldValue);
+    })
+
+    watchEffect(() => {
+      if (searchText.value) {
+        console.log("run again!");
+      }
+    })
 
     return {
       searchText,

@@ -14,25 +14,52 @@
             <div class="price">Price: {{ transaction.price }} </div>
         </div>
     </div>
+    <div v-else-if="error">
+        {{error.message}}
+    </div>
     <div v-else>
         <h3>Loading Transaction...</h3>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Transactions',
-        data() {
-            return {
-                transactions: []
+import { ref } from 'vue'
+export default {
+    name: 'Transactions',
+    // data() {
+    //     return {
+    //         transactions: []
+    //     }
+    // },
+    // created() {
+    //     fetch("http://localhost:3000/transactions")
+    //         .then(response => response.json())
+    //         .then(data => this.transactions = data)
+    // },
+    setup() {
+        const transactions = ref([]);
+        const error = ref(null);
+
+        const fetchAll = async () => {
+            const response = await fetch("http://localhost:3000/transactions");
+            try {
+                if (!response.ok) throw new Error("Some thing went wrong.")
+                
+                transactions.value = await response.json();
+            } catch (err) {
+                error.value = err;
+                console.log(error.value);
             }
-        },
-        created() {
-            fetch("http://localhost:3000/transactions")
-                .then(response => response.json())
-                .then(data => this.transactions = data)
-        },
+            
+        }
+        fetchAll()
+
+        return {
+            transactions,
+            error
+        }
     }
+}
 </script>
 
 <style scoped>
