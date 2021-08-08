@@ -13,23 +13,21 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 export default {
     name: "TransactionsDetail",
-    computed: {
-        transaction() {
-            return this.$store.state.transaction;
-        },
-        transactionsFilltered() {
-            return this.$store.getters.transactionsFilltered;
-        }
-    },
-    created() {
-        // fetch("http://localhost:3000/transactions/" + this.$route.params.id)
-        //     .then((response) => response.json())
-        //     .then((data) => (this.transaction = data));
+    setup() {
+        const route = useRoute();
+        const store = useStore();
 
-        this.$store.dispatch("fetchTransaction", { id: this.$route.params.id})
-    },
+        store.dispatch("fetchTransaction",{id: route.params.id})
+
+        return {
+            transaction: computed(() => store.state.transaction),
+        }
+    }
 };
 </script>
 

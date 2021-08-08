@@ -10,7 +10,7 @@ const store = createStore({
         }
     },
     getters: {
-        transactionsFilltered(state) {
+        transactionsFiltered(state) {
             return state.transactions.filter(transaction => transaction % 2 === 0);
         }
     },
