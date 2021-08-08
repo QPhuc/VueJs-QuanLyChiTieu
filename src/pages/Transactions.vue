@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import useTransaction from '../uses/fetchTransaction'
 export default {
     name: 'Transactions',
     // data() {
@@ -37,26 +37,12 @@ export default {
     //         .then(data => this.transactions = data)
     // },
     setup() {
-        const transactions = ref([]);
-        const error = ref(null);
+        const { transactions, error, fetchAll } = useTransaction()
 
-        const fetchAll = async () => {
-            const response = await fetch("http://localhost:3000/transactions");
-            try {
-                if (!response.ok) throw new Error("Some thing went wrong.")
-                
-                transactions.value = await response.json();
-            } catch (err) {
-                error.value = err;
-                console.log(error.value);
-            }
-            
-        }
-        fetchAll()
+        fetchAll();
 
         return {
-            transactions,
-            error
+            transactions, error
         }
     }
 }
