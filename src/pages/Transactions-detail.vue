@@ -15,16 +15,20 @@
 <script>
 export default {
     name: "TransactionsDetail",
-    data() {
-        return {
-        transaction: null,
-        };
+    computed: {
+        transaction() {
+            return this.$store.state.transaction;
+        },
+        transactionsFilltered() {
+            return this.$store.getters.transactionsFilltered;
+        }
     },
     created() {
-        fetch("http://localhost:3000/transactions/" + this.$route.params.id)
-        .then((response) => response.json())
-        .then((data) => (this.transaction = data))
-        .then(() => console.log(this.transaction));
+        // fetch("http://localhost:3000/transactions/" + this.$route.params.id)
+        //     .then((response) => response.json())
+        //     .then((data) => (this.transaction = data));
+
+        this.$store.dispatch("fetchTransaction", { id: this.$route.params.id})
     },
 };
 </script>
