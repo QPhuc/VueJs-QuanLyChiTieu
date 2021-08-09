@@ -28,6 +28,9 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 export default {
     name: 'Transactions',
+    meta: {
+        layout: 'auth'
+    },
     setup() {
         // const { transactions, error, fetchAll } = useTransaction()
         // fetchAll();

@@ -7,12 +7,15 @@ import NotFound from '../pages/404.vue'
 const routes = [
   {
     path: '/',
-    component: Home
+    component: Home,
   },
   {
     path: '/transactions',
     name: 'transaction-route',
     component: Transactions,
+    meta: {
+      layout: 'auth'
+    }
   },
   {
     path: '/transactions/:id',
