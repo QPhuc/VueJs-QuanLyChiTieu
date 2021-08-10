@@ -6,7 +6,6 @@ import { projectAuth } from "@/configs/firebase"
 const requireAuth = (to, from , next) => {
   const user = projectAuth.currentUser;
 
-  console.log("Before enter router", user);
   if(!user) next({ name: "Login", params: {} })
   else next();
 };
@@ -15,6 +14,10 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    meta: {
+      text: "Hey, Phuc Tran",
+      leading: true,
+    },
     component: () => import (/* webpackChunkName: "home" */ "../views/index.vue"),
   },
   {
@@ -36,6 +39,10 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
+    meta: {
+      text: "Profile",
+      leading: false,
+    },
     component: () => import (/* webpackChunkName: "profile" */ "../views/profile.vue"),
     beforeEnter: requireAuth,
   },
@@ -43,6 +50,32 @@ const routes = [
     path: '/logout',
     name: 'Logout',
     component: () => import (/* webpackChunkName: "logout" */ "../views/logout.vue"),
+  },
+  {
+    path: '/budget',
+    name: 'Budget',
+    meta: {
+      text: "Budget",
+      leading: false,
+    },
+    component: () => import (/* webpackChunkName: "budget" */ "../views/budget.vue"),
+    beforeEnter: requireAuth,
+  },
+  {
+    path: '/report',
+    name: 'Report',
+    meta: {
+      text: "Report",
+      leading: false,
+    },
+    component: () => import (/* webpackChunkName: "report" */ "../views/report.vue"),
+    beforeEnter: requireAuth,
+  },
+  {
+    path: '/new-transaction',
+    name: 'NewTransaction',
+    component: () => import (/* webpackChunkName: "transaction" */ "../views/new-transaction.vue"),
+    beforeEnter: requireAuth,
   },
   {
     path: '/:pathMatch(.*)*',
