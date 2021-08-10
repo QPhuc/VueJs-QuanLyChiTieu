@@ -1,5 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NotFound from '../views/404.vue'
+import { projectAuth } from "@/configs/firebase"
+
+// Auth Guards
+const requireAuth = (to, from , next) => {
+  const user = projectAuth.currentUser;
+
+  console.log("Before enter router", user);
+  if(!user) next({ name: "Login", params: {} })
+  else next();
+};
 
 const routes = [
   {
@@ -27,6 +37,12 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: () => import (/* webpackChunkName: "profile" */ "../views/profile.vue"),
+    beforeEnter: requireAuth,
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: () => import (/* webpackChunkName: "logout" */ "../views/logout.vue"),
   },
   {
     path: '/:pathMatch(.*)*',
