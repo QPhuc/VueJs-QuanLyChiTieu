@@ -11,6 +11,7 @@
                             class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
                             type="text"
                             placeholder="iMoney..."
+                            v-model="fullName"
                         />
                     </label>
                 </div>
@@ -23,6 +24,7 @@
                             type="email"
                             placeholder="example@gmail.com"
                             autocomplete="username"
+                            v-model="email"
                         />
                     </label>
                 </div>
@@ -35,16 +37,29 @@
                             type="password"
                             placeholder="Example"
                             autocomplete="current-password"
+                            v-model="password"
                         />
                     </label>
                 </div>
                 <div class="row">
                     <button
-                        class="py-3 text-center w-full bg-primary text-white font-bold rounded-lg"
+                        v-if="!isPending"
                         type="submit"
+                        class="py-3 text-center w-full bg-primary text-white font-bold rounded-lg"
                     >Sign Up</button>
+                    <button
+                        v-else
+                        type="button"
+                        class="py-3 text-center w-full bg-gray-800 text-white font-bold rounded-lg cursor-not-allowed"
+                        disabled
+                    >Loading...</button>
                 </div>
             </form>
+
+            <!-- Start: Error -->
+            <div v-if="error" class="text-left text-red mt-4">
+                <span>{{ error }}</span>
+            </div>
 
             <!-- Start: Direction -->
             <div class="w-full text-center mt-6">
@@ -61,10 +76,20 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useSignUp } from '@/composables/useSignUp';
 export default {
     setup() {
-        function onSubmit() { }
-        return { onSubmit };
+        const { error, isPending, signup } = useSignUp();
+
+        const fullName = ref("");
+        const email = ref("");
+        const password = ref("");
+
+        async function onSubmit() {
+            await signup(email.value, password.value, fullName.value);
+        }
+        return { fullName, email, password, error, isPending, onSubmit };
     },
 };
 </script>
