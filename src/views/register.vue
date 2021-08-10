@@ -62,7 +62,7 @@
             </div>
 
             <!-- Start: Direction -->
-            <div class="w-full text-center mt-6">
+            <div class="w-full text-center mt-6 mb-6">
                 <span class="font-semibold">I'm already a member.</span>
                 <span class="ml-1">
                     <router-link

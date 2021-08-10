@@ -7,7 +7,7 @@
                 class="w-full h-auto object-cover"
             />
         </div>
-        <div class="text-center mt-12">
+        <div class="text-center mt-10">
             <h1 class="font-bold text-xl text-dark">Best way to saving Your Money!</h1>
         </div>
     </div>
